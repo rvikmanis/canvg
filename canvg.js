@@ -11,17 +11,17 @@
 	'use strict';
 	// export as AMD...
 	if ( typeof define !== 'undefined' && define.amd ) {
-		define('canvgModule', [ 'rgbcolor', 'stackblur' ], factory );
+		define('canvgModule', [ 'rgbcolor', 'stackblur', 'canvas' ], factory );
 	}
 
 	// ...or as browserify
 	else if ( typeof module !== 'undefined' && module.exports ) {
-		module.exports = factory( require( 'rgbcolor' ), require( 'stackblur' ) );
+		module.exports = factory( require( 'rgbcolor' ), require( 'stackblur' ), require( 'canvas' ) );
 	}
 
-	global.canvg = factory( global.RGBColor, global.stackBlur );
+	global.canvg = factory( global.RGBColor, global.stackBlur, global.Canvas );
 
-}( typeof window !== 'undefined' ? window : this, function ( RGBColor, stackBlur ) {
+}( typeof window !== 'undefined' ? window : this, function ( RGBColor, stackBlur, Canvas ) {
 	var nodeEnv = (typeof module !== 'undefined' && module.exports);
 	if (nodeEnv && (typeof window === 'undefined')) {
 		var jsdom = require('jsdom').jsdom;
@@ -53,7 +53,7 @@
 			var svgTags = document.querySelectorAll('svg');
 			for (var i=0; i<svgTags.length; i++) {
 				var svgTag = svgTags[i];
-				var c = document.createElement('canvas');
+				var c = new Canvas;
 				c.width = svgTag.clientWidth;
 				c.height = svgTag.clientHeight;
 				svgTag.parentNode.insertBefore(c, svgTag);
@@ -1697,7 +1697,7 @@
 				tempSvg.attributes['transform'] = new svg.Property('transform', this.attribute('patternTransform').value);
 				tempSvg.children = this.children;
 
-				var c = document.createElement('canvas');
+				var c = new Canvas;
 				c.width = width;
 				c.height = height;
 				var cctx = c.getContext('2d');
@@ -1835,7 +1835,7 @@
 					tempSvg.attributes['height'] = new svg.Property('height', rootView.height);
 					tempSvg.children = [ group ];
 
-					var c = document.createElement('canvas');
+					var c = new Canvas;
 					c.width = rootView.width;
 					c.height = rootView.height;
 					var tempCtx = c.getContext('2d');
@@ -2646,13 +2646,13 @@
 				var mask = element.attribute('mask').value;
 				element.attribute('mask').value = '';
 
-					var cMask = document.createElement('canvas');
+					var cMask = new Canvas;
 					cMask.width = x + width;
 					cMask.height = y + height;
 					var maskCtx = cMask.getContext('2d');
 					this.renderChildren(maskCtx);
 
-					var c = document.createElement('canvas');
+					var c = new Canvas;
 					c.width = x + width;
 					c.height = y + height;
 					var tempCtx = c.getContext('2d');
@@ -2742,7 +2742,7 @@
 					py = Math.max(py, efd);
 				}
 
-				var c = document.createElement('canvas');
+				var c = new Canvas;
 				c.width = width + 2*px;
 				c.height = height + 2*py;
 				var tempCtx = c.getContext('2d');
