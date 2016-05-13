@@ -26,6 +26,7 @@
 	if (nodeEnv && (typeof window === 'undefined')) {
 		var jsdom = require('jsdom').jsdom;
 		window = jsdom().defaultView;
+		var document = window.document;
 	}
 	if (!window.DOMParser) {
 		window.DOMParser = require('xmldom').DOMParser;
