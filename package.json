@@ -29,6 +29,7 @@
     "rgbcolor": "0.0.4",
     "stackblur": "^1.0.0",
     "jsdom": "^8.1.0",
+    "canvas": "^1.3.12",
     "xmldom": "^0.1.22"
   }
 }
